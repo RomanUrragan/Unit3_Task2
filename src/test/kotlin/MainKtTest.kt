@@ -180,4 +180,52 @@ class MainKtTest {
         val result = monthlyLimitIsReached(cardType, previousAmountPerMonth, transferAmount)
         assert(!result)
     }
+
+    @Test
+    fun dailyLimitErrorVKPay(){
+        var cardType = TYPE_VK_PAY
+        var previousAmountPerDay = 0
+        var previousAmountPerMonth = 0
+        var transferAmount = MAX_LIMIT_PER_TIME_FOR_VK_PAY + 1
+
+       assertThrows(Exception::class.java){
+           calculateCommission(cardType, previousAmountPerDay, previousAmountPerMonth, transferAmount)
+       }
+    }
+
+    @Test
+    fun dailyLimitErrorMasterCard(){
+        var cardType = TYPE_MASTERCARD
+        var previousAmountPerMonth = 0
+        var previousAmountPerDay = MAX_LIMIT_PER_DAY_FOR_CARDS
+        var transferAmount = 1
+
+        assertThrows(Exception::class.java){
+            calculateCommission(cardType, previousAmountPerDay, previousAmountPerMonth, transferAmount)
+        }
+    }
+
+    @Test
+    fun monthlyLimitErrorVKPay(){
+        var cardType = TYPE_VK_PAY
+        var previousAmountPerDay = 0
+        var previousAmountPerMonth = MAX_LIMIT_PER_MONTH_FOR_VK_PAY
+        var transferAmount = 1
+
+        assertThrows(Exception::class.java){
+            calculateCommission(cardType, previousAmountPerDay, previousAmountPerMonth, transferAmount)
+        }
+    }
+
+    @Test
+    fun monthlyLimitErrorMasterCard(){
+        var cardType = TYPE_MASTERCARD
+        var previousAmountPerDay = 0
+        var previousAmountPerMonth = MAX_LIMIT_PER_MONTH_FOR_CARDS
+        var transferAmount = 1
+
+        assertThrows(Exception::class.java){
+            calculateCommission(cardType, previousAmountPerDay, previousAmountPerMonth, transferAmount)
+        }
+    }
 }
